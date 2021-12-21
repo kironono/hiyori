@@ -50,5 +50,5 @@ fn main() {
     println!("Pressure      : {} hPa", cw.main.pressure);
     println!("Humidity      : {} %", cw.main.humidity);
     println!("Wind Speed    : {} m/s", cw.wind.speed);
-    println!("Wind Direction: {}", cw.wind.deg);
+    println!("Wind Direction: {} deg", cw.wind.deg);
 }
