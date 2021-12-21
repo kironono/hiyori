@@ -13,7 +13,7 @@ pub struct CurrentWeather {
     pub clouds: Clouds,
     pub dt: i64,
     pub sys: Sys,
-    pub timezone: i64,
+    pub timezone: i32,
     pub id: i64,
     pub name: String,
     pub cod: i64,
@@ -54,7 +54,7 @@ pub struct Main {
 pub struct Wind {
     pub speed: f64,
     pub deg: i64,
-    pub gust: f64,
+    pub gust: Option<f64>,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]

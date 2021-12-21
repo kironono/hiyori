@@ -2,6 +2,8 @@ use clap::{
     crate_authors, crate_description, crate_name, crate_version, value_t_or_exit, App, Arg,
 };
 
+use chrono::{DateTime, FixedOffset, TimeZone};
+
 use hiyori::openweather::client::Client;
 use std::{env, process::exit};
 
@@ -30,16 +32,23 @@ fn main() {
     let location = value_t_or_exit!(matches.value_of("location"), String);
 
     let client = Client::new(&api_key, "metric");
-    let current_weather = match client.weather(&location) {
-        Ok(weather) => weather,
-        Err(_) => {
-            eprintln!("Request failed");
+    let cw = match client.weather(&location) {
+        Ok(w) => w,
+        Err(e) => {
+            eprintln!("Request failed: {}", e);
             exit(1);
         }
     };
 
-    println!("Location name: {}", current_weather.name);
-    println!("Temp: {}", current_weather.main.temp);
-    println!("Pressure: {}", current_weather.main.pressure);
-    println!("Humidity: {}", current_weather.main.humidity);
+    let dt: DateTime<FixedOffset> = FixedOffset::east(cw.timezone).timestamp(cw.dt, 0);
+
+    println!("Location      : {}, {} ({})", cw.name, cw.sys.country, dt);
+    if let Some(weather) = cw.weather.iter().nth(0) {
+        println!("Weather       : {}, {}", weather.main, weather.description);
+    }
+    println!("Temperature   : {} C", cw.main.temp);
+    println!("Pressure      : {} hPa", cw.main.pressure);
+    println!("Humidity      : {} %", cw.main.humidity);
+    println!("Wind Speed    : {} m/s", cw.wind.speed);
+    println!("Wind Direction: {}", cw.wind.deg);
 }

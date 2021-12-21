@@ -40,7 +40,7 @@ impl Client {
         match self.fetch(&query_string) {
             Ok(body) => match serde_json::from_str(&body) {
                 Ok(current_weather) => Ok(current_weather),
-                Err(e) => Err(format!("{}", e)),
+                Err(e) => Err(format!("{}, response body: {}", e, &body)),
             },
             Err(_) => Err("request error".to_string()),
         }
