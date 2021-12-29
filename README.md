@@ -1,5 +1,8 @@
 # `hiyori`
 
+[![version](https://img.shields.io/crates/v/hiyori)](https://crates.io/crates/hiyori)
+[![license](https://img.shields.io/crates/l/hiyori)](https://crates.io/crates/hiyori)
+
 CLI application to check the current weather.
 
 ```
@@ -11,6 +14,14 @@ Pressure      : 1010 hPa
 Humidity      : 67 %
 Wind Speed    : 2.06 m/s
 Wind Direction: 300 deg
+```
+
+## Installation
+
+cargo install:
+
+```
+cargo install hiyori
 ```
 
 ## USAGE
